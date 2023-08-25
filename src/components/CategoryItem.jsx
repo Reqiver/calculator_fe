@@ -6,7 +6,6 @@ import ViewCategoryBudget from "./ViewCategoryBudget";
 import ExpenseItem from "./ExpenseItem";
 import AddExpenseForm from "./AddExpenseForm";
 import { AppContext } from "../context/AppContext";
-import {v4 as uuidv4} from "uuid";
 
 const CategoryItem = (props) => {
     const [isEditing, setIsEditing] = useState(false);

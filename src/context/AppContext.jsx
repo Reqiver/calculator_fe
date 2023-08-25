@@ -6,7 +6,7 @@ const updateDB = async (data = null) => {
 	const date= moment().format('YYYYMM');
 	console.log(date)
 
-	const rawBody = {"date": 202307}
+	const rawBody = {"date": date}
 
 	if (data && 'budget' in data) {
 		rawBody['data'] = data
