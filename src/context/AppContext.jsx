@@ -21,7 +21,6 @@ const updateDB = async (data = null) => {
 		.catch(function (error) {
 		console.log(error);
 	  });
-	console.log(222222, responseData)
 	return responseData
 }
 
@@ -29,22 +28,26 @@ const updateDB = async (data = null) => {
 // 5. The reduceer - this is used to update the state, based on the action
 export const AppReducer = (state, action) => {
 	let newState = state;
+	let oldExpense
+	let oldDetails
 	switch (action.type) {
 		case 'INITIALIZE':
 			newState = action.payload
 			break;
 		case 'ADD_CATEGORY':
+			oldExpense = state?.expenses || [];
 			newState = {
 				...state,
-				expenses: [...state.expenses, action.payload],
+				expenses: [...oldExpense, action.payload],
 			};
 			break;
 		case 'ADD_EXPENSE':
 			const category = state.expenses.find(el => el.id === action.payload.category_id)
-			if (category.details.some(el => el.id === action.payload.expense.id)) {
+			if (category.details?.some(el => el.id === action.payload.expense.id)) {
 				return state
 			}
-			category.details = [action.payload.expense, ...category.details]
+			oldDetails = category?.details || [];
+			category.details = [action.payload.expense, ...oldDetails]
 			newState = {
 				...state,
 				expenses: [...state.expenses],
@@ -77,7 +80,7 @@ export const AppReducer = (state, action) => {
 			return state;
 	}
 	if (action.type !== 'INITIALIZE' && state !== newState){
-		console.log(3333333)
+		console.log(3333333, newState)
 		updateDB(newState);
 	}
 	return newState
