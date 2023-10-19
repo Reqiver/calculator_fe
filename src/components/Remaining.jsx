@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
+import {amountFormatter} from "../utils";
 
 const RemainingBudget = () => {
 	const { expenses, budget } = useContext(AppContext);
@@ -12,7 +13,7 @@ const RemainingBudget = () => {
 
 	return (
 		<div className={`alert p-3 ${alertType}`}>
-			<span>Remaining: {budget - totalExpenses}₴</span>
+			<span>Remaining: {amountFormatter(budget - totalExpenses)}₴</span>
 		</div>
 	);
 };

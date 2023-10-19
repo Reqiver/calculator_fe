@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
+import {amountFormatter} from "../utils";
 
 const ExpenseTotal = () => {
 	const { expenses } = useContext(AppContext);
@@ -10,7 +11,7 @@ const ExpenseTotal = () => {
 
 	return (
 		<div className='alert alert-primary p-3'>
-			<span>Spent so far: {total}₴</span>
+			<span>Spent so far: {amountFormatter(total)}₴</span>
 		</div>
 	);
 };
