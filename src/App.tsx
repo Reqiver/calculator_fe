@@ -9,13 +9,13 @@ import ExpenseTotal from './components/ExpenseTotal';
 import ExpenseList from './components/ExpenseList';
 import RemainingBudget from './components/Remaining';
 import AddCategory from "./components/AddCategory";
-
+import Header from "./components/Header";
 const App = () => {
 	const [modalShow, setModalShow] = useState(false);
 	return (
 		<AppProvider>
 			<div className='container'>
-				<h1 className='mt-3'>My Budget Planner</h1>
+				<Header/>
 				<div className='row mt-3'>
 					<div className='col-sm'>
 						<Budget />

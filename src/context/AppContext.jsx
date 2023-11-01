@@ -2,11 +2,11 @@ import React, { createContext, useReducer, useEffect } from 'react';
 import moment from "moment";
 import axios from "axios";
 
-const updateDB = async (data = null) => {
-	const date= moment().format('YYYYMM');
-	console.log(date)
+const updateDB = async (data = null, date = null) => {
+	const _date= date || moment().format('YYYYMM');
+	console.log(_date)
 
-	const rawBody = {"date": date}
+	const rawBody = {"date": _date}
 
 	if (data && 'budget' in data) {
 		rawBody['data'] = data
@@ -30,6 +30,12 @@ export const AppReducer = (state, action) => {
 	let newState = state;
 	let oldExpense
 	let oldDetails
+
+	const getNewData = async () => {
+		const data = await updateDB(null, action.payload);
+		newState = data?.data
+	}
+
 	switch (action.type) {
 		case 'INITIALIZE':
 			newState = action.payload
@@ -76,10 +82,18 @@ export const AppReducer = (state, action) => {
 			editCategory.budget = action.payload.budget
 			break;
 
+		case 'NEXT_MONTH':
+			getNewData().catch(console.error)
+			break;
+
+		case 'PREV_MONTH':
+			getNewData().catch(console.error)
+			break;
+
 		default:
 			return state;
 	}
-	if (action.type !== 'INITIALIZE' && state !== newState){
+	if (!['INITIALIZE', 'NEXT_MONTH', 'PREV_MONTH'].includes(action.type) && state !== newState){
 		console.log(3333333, newState)
 		updateDB(newState);
 	}
